@@ -4,22 +4,21 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.ftcTeam.configurations.MotorAndServoRobot;
 import org.ftcbootstrap.ActiveOpMode;
-import org.ftcbootstrap.components.ServoComponent;
+import org.ftcbootstrap.components.operations.motors.MotorToTime;
 import org.ftcbootstrap.demos.beginner.MyFirstBot;
 
+
 /**
- * Note: This Exercise assumes that you have used your Robot Controller App to "scan" your hardware and
- * saved the configuration named: "MyFirstBot" and creating a class by the same name: {@link MyFirstBot}.
+ * Note:  It is assumed that the proper registrar is used for this set of demos. To confirm please
+ * search for "Enter your custom registrar"  in  {@link org.ftcTeam.FTCTeamControllerActivity}
  * <p/>
- * Summary
- * Demonstrates the use of a reusable "bootstrap" operation (MotorToTime) to reduce the code in the opmode.
  */
 
 @Autonomous
-public class MoveServoToPosition extends ActiveOpMode {
+public class AutoLesson01 extends ActiveOpMode {
 
     private MotorAndServoRobot robot;
-    private ServoComponent servoComponent;
+    private MotorToTime motorToTime;
 
     /**
      * Implement this method to define the code to run when the Init button is pressed on the Driver station.
@@ -29,24 +28,26 @@ public class MoveServoToPosition extends ActiveOpMode {
 
         robot = MotorAndServoRobot.newConfig(hardwareMap, getTelemetryUtil());
 
-        double initialPosition = 0.3;
-        this.servoComponent = new ServoComponent(this,  robot.servo1,   initialPosition);
-
+        motorToTime = new MotorToTime("motor with timer" , this ,robot.motor1 );
 
         getTelemetryUtil().addData("Init", getClass().getSimpleName() + " initialized.");
         getTelemetryUtil().sendTelemetry();
+
     }
 
     /**
      * Implement this method to define the code to run when the Start button is pressed on the Driver station.
-     * This method will be called on each hardware cycle just as the loop() method is called for event based Opmodes
-     * @throws InterruptedException
+     * This method will be called on each hardware cycle just as the loop() method is called for event based Opmode
      */
     @Override
     protected void activeLoop() throws InterruptedException {
 
-            double targetPosition  = 0.7;
-            servoComponent.updateServoTargetPosition(targetPosition);
+            //run full power (1)  for 3 seconds
+            boolean hasTimeExpired = motorToTime.runToTarget(1, 3);
+
+            if (hasTimeExpired) {
+                setOperationsCompleted();
+            }
 
         }
 

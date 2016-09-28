@@ -7,18 +7,16 @@ import org.ftcTeam.configurations.MotorAndServoRobot;
 import org.ftcbootstrap.ActiveOpMode;
 import org.ftcbootstrap.components.operations.motors.MotorToEncoder;
 import org.ftcbootstrap.components.utils.MotorDirection;
-import org.ftcbootstrap.demos.beginner.MyFirstBot;
+
 
 /**
- * Note: This Exercise assumes that you have used your Robot Controller App to "scan" your hardware and
- * saved the configuration named: "MyFirstBot" and creating a class by the same name: {@link MyFirstBot}.
+ * Note:  It is assumed that the proper registrar is used for this set of demos. To confirm please
+ * search for "Enter your custom registrar"  in  {@link org.ftcTeam.FTCTeamControllerActivity}
  * <p/>
- * Summary
- * Demonstrates the use of a reusable "bootstrap" operation (MotorToTime) to reduce the code in the opmode.
  */
 
 @Autonomous
-public class RunMotorToEncoderTarget extends ActiveOpMode {
+public class AutoLesson03 extends ActiveOpMode {
 
     private MotorAndServoRobot robot;
     private MotorToEncoder motorToEncoder;
@@ -41,7 +39,6 @@ public class RunMotorToEncoderTarget extends ActiveOpMode {
     /**
      * Implement this method to define the code to run when the Start button is pressed on the Driver station.
      * This method will be called on each hardware cycle just as the loop() method is called for event based Opmodes
-     * @throws InterruptedException
      */
     @Override
     protected void activeLoop() throws InterruptedException {
