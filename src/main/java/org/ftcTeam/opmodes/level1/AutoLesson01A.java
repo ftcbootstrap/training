@@ -1,12 +1,9 @@
 package org.ftcTeam.opmodes.level1;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.ftcTeam.configurations.MotorAndServoRobot;
 import org.ftcbootstrap.ActiveOpMode;
-import org.ftcbootstrap.components.operations.motors.MotorToEncoder;
-import org.ftcbootstrap.components.utils.MotorDirection;
 
 
 /**
@@ -16,10 +13,9 @@ import org.ftcbootstrap.components.utils.MotorDirection;
  */
 
 @Autonomous
-public class AutoLesson03 extends ActiveOpMode {
+public class AutoLesson01A extends ActiveOpMode {
 
     private MotorAndServoRobot robot;
-    private MotorToEncoder motorToEncoder;
 
 
     /**
@@ -29,27 +25,34 @@ public class AutoLesson03 extends ActiveOpMode {
     protected void onInit() {
 
         robot = MotorAndServoRobot.newConfig(hardwareMap, getTelemetryUtil());
-        motorToEncoder = new MotorToEncoder(  this, robot.motor1);
 
     }
 
     /**
      * Implement this method to define the code to run when the Start button is pressed on the Driver station.
-     * This method will be called on each hardware cycle just as the loop() method is called for event based Opmodes
+     * This method will be called on each hardware cycle just as the loop() method is called for event based Opmode
      */
     @Override
     protected void activeLoop() throws InterruptedException {
 
-        boolean targetReached = false;
-        MotorDirection direction = MotorDirection.MOTOR_FORWARD;
-        DcMotor.RunMode mode = DcMotor.RunMode.RUN_USING_ENCODER;
-        //run motor at power 1 , move forward for and 8000 encoder counts
-        targetReached = motorToEncoder.runToTarget(1, 8000,direction,mode);
+            boolean targetReached = false;
+            //run motor at power 1 for 3 seconds
+            double power = 1;
+            double targetTime = 3;
 
-        if ( targetReached) {
-            setOperationsCompleted();
+            targetReached = getTimer().targetReached(targetTime);
+            if (targetReached) {
+                robot.motor1.setPower(0);
+            }
+            else{
+                robot.motor1.setPower(power);
+            }
+
+            if (targetReached) {
+                setOperationsCompleted();
+            }
+
         }
 
-    }
 
 }

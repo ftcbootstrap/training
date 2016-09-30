@@ -1,10 +1,9 @@
-package org.ftcTeam.opmodes.level1;
+package org.ftcTeam.opmodes.level3;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import org.ftcTeam.configurations.MotorAndServoRobot;
+import org.ftcTeam.configurations.TankDriveRobotWithSensors;
 import org.ftcbootstrap.ActiveOpMode;
-import org.ftcbootstrap.components.ServoComponent;
 
 
 /**
@@ -14,10 +13,9 @@ import org.ftcbootstrap.components.ServoComponent;
  */
 
 @Autonomous
-public class AutoLesson02 extends ActiveOpMode {
+public class MotorStopOnTouch1 extends ActiveOpMode {
 
-    private MotorAndServoRobot robot;
-    private ServoComponent servoComponent;
+    private TankDriveRobotWithSensors robot;
 
     /**
      * Implement this method to define the code to run when the Init button is pressed on the Driver station.
@@ -25,26 +23,28 @@ public class AutoLesson02 extends ActiveOpMode {
     @Override
     protected void onInit() {
 
-        robot = MotorAndServoRobot.newConfig(hardwareMap, getTelemetryUtil());
-
-        double initialPosition = 0.3;
-        servoComponent = new ServoComponent(this,  robot.servo1,   initialPosition);
+        robot = TankDriveRobotWithSensors.newConfig(hardwareMap, getTelemetryUtil());
 
     }
 
     /**
      * Implement this method to define the code to run when the Start button is pressed on the Driver station.
      * This method will be called on each hardware cycle just as the loop() method is called for event based Opmodes
+     *
+     * @throws InterruptedException
      */
     @Override
     protected void activeLoop() throws InterruptedException {
 
-        double targetPosition  = 0.7;
-        servoComponent.updateServoTargetPosition(targetPosition);
-
-        setOperationsCompleted();
+        //run motor full power (1) until the touch sensor is pressed
+        if ( robot.touch.isPressed() ) {
+            robot.leftMotor.setPower(0);
+            setOperationsCompleted();
+        }
+        else{
+            robot.leftMotor.setPower(1);
+        }
 
     }
-
 
 }

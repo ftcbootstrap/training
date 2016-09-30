@@ -13,7 +13,8 @@ public class Level1Registrar extends BootstrapRegistrar {
     Class[] classes = {
 
             TeleopLesson01.class,
-            AutoLesson01.class,
+            AutoLesson01A.class,
+            AutoLesson01B.class,
             AutoLesson02.class,
             AutoLesson03.class
     };

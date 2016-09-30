@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.ftcTeam.configurations.MotorAndServoRobot;
 import org.ftcbootstrap.ActiveOpMode;
 import org.ftcbootstrap.components.operations.motors.MotorToTime;
-import org.ftcbootstrap.demos.beginner.MyFirstBot;
 
 
 /**
@@ -15,7 +14,7 @@ import org.ftcbootstrap.demos.beginner.MyFirstBot;
  */
 
 @Autonomous
-public class AutoLesson01 extends ActiveOpMode {
+public class AutoLesson01B extends ActiveOpMode {
 
     private MotorAndServoRobot robot;
     private MotorToTime motorToTime;
@@ -27,11 +26,7 @@ public class AutoLesson01 extends ActiveOpMode {
     protected void onInit() {
 
         robot = MotorAndServoRobot.newConfig(hardwareMap, getTelemetryUtil());
-
         motorToTime = new MotorToTime("motor with timer" , this ,robot.motor1 );
-
-        getTelemetryUtil().addData("Init", getClass().getSimpleName() + " initialized.");
-        getTelemetryUtil().sendTelemetry();
 
     }
 
@@ -42,14 +37,17 @@ public class AutoLesson01 extends ActiveOpMode {
     @Override
     protected void activeLoop() throws InterruptedException {
 
-            //run full power (1)  for 3 seconds
-            boolean hasTimeExpired = motorToTime.runToTarget(1, 3);
+            boolean targetReached = false;
+            //run motor at power 1 for 3 seconds
+            double power = 1;
+            double targetTime = 3;
 
-            if (hasTimeExpired) {
+            targetReached = motorToTime.runToTarget(power, targetTime);
+
+            if (targetReached) {
                 setOperationsCompleted();
             }
 
         }
-
 
 }

@@ -13,11 +13,15 @@ import org.ftcbootstrap.components.utils.TelemetryUtil;
  * It is also assumed that the device names in the 'init()' method below are the same  as the devices named for the
  * saved configuration on the phone.
  */
-public class MotorAndServoRobot extends RobotConfiguration {
+public class TankDriveRobotWithClaw extends RobotConfiguration {
 
     //motors
-    public DcMotor motor1;
-    public Servo servo1;
+    public DcMotor leftMotor;
+    public DcMotor rightMotor;
+
+    //servo
+    public Servo leftClaw;
+    public Servo rightClaw;
 
     /**
      * Assign your class instance variables to the saved device names in the hardware map
@@ -30,9 +34,12 @@ public class MotorAndServoRobot extends RobotConfiguration {
 
         setTelemetry(telemetryUtil);
 
-        servo1 = (Servo) getHardwareOn("servo1", hardwareMap.servo);
-        motor1 = (DcMotor) getHardwareOn("leftMotor", hardwareMap.dcMotor);
+        leftMotor = (DcMotor) getHardwareOn("leftMotor", hardwareMap.dcMotor);
+        rightMotor = (DcMotor) getHardwareOn("rightMotor", hardwareMap.dcMotor);
+        rightMotor.setDirection(DcMotor.Direction.REVERSE);
 
+        leftClaw = (Servo) getHardwareOn("leftClaw", hardwareMap.servo);
+        rightClaw = (Servo) getHardwareOn("rightClaw", hardwareMap.servo);
 
     }
 
@@ -44,9 +51,9 @@ public class MotorAndServoRobot extends RobotConfiguration {
      * @param telemetryUtil
      * @return
      */
-    public static MotorAndServoRobot newConfig(HardwareMap hardwareMap, TelemetryUtil telemetryUtil) {
+    public static TankDriveRobotWithClaw newConfig(HardwareMap hardwareMap, TelemetryUtil telemetryUtil) {
 
-        MotorAndServoRobot config = new MotorAndServoRobot();
+        TankDriveRobotWithClaw config = new TankDriveRobotWithClaw();
         config.init(hardwareMap, telemetryUtil);
         return config;
 
